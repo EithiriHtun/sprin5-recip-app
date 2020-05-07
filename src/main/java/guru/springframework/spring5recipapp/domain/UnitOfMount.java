@@ -1,10 +1,13 @@
 package guru.springframework.spring5recipapp.domain;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Data
 @Entity
 public class UnitOfMount {
 
@@ -14,19 +17,4 @@ public class UnitOfMount {
 
     private String description;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
