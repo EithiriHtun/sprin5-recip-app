@@ -29,7 +29,7 @@ public class IndexController {
 
         log.debug("Getting Index Page..");
 
-        System.out.println("My Recipes in controller>>>>>>>"+recipeService.getRecipes());
+       // System.out.println("My Recipes in controller>>>>>>>"+recipeService.getRecipes());
 
         model.addAttribute("recipes",recipeService.getRecipes());
 
@@ -42,8 +42,6 @@ public class IndexController {
         System.out.println("Cat ID is:" + optionalCategory.get().getId());
 
         System.out.println("UOM ID is:"+ optionalUnitOfMount.get().getId());*/
-
-        System.out.println("Some message to says!!!.."+recipeService.getRecipes());
 
         return "index";
     }
