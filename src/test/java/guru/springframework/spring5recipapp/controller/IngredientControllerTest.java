@@ -2,18 +2,15 @@ package guru.springframework.spring5recipapp.controller;
 
 import guru.springframework.spring5recipapp.commands.IngredientCommand;
 import guru.springframework.spring5recipapp.commands.RecipeCommand;
+import guru.springframework.spring5recipapp.services.IngredientService;
 import guru.springframework.spring5recipapp.services.RecipeService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.HashSet;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -25,9 +22,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class IngredientControllerTest {
 
-    /*@Mock
+    @Mock
     IngredientService ingredientService;
 
+    /*
     @Mock
     UnitOfMountService unitOfMountService;*/
 
@@ -41,7 +39,7 @@ class IngredientControllerTest {
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        ingredientController = new IngredientController(recipeService);
+        ingredientController = new IngredientController(recipeService, ingredientService);
         mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
     }
 
@@ -61,7 +59,7 @@ class IngredientControllerTest {
         verify(recipeService, times(1)).findCommandById(anyLong());
     }
 
-   /* @org.junit.Test
+    @Test
     public void testShowIngredient() throws Exception {
         //given
         IngredientCommand ingredientCommand = new IngredientCommand();
@@ -75,7 +73,7 @@ class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/show"))
                 .andExpect(model().attributeExists("ingredient"));
     }
-
+    /*
     @org.junit.Test
     public void testNewIngredientForm() throws Exception {
         //given
