@@ -3,8 +3,7 @@ package guru.springframework.spring5recipapp.controller;
 import guru.springframework.spring5recipapp.commands.RecipeCommand;
 import guru.springframework.spring5recipapp.domain.Recipe;
 import guru.springframework.spring5recipapp.services.RecipeService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,7 +28,7 @@ class RecipeControllerTest {
 
     MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -37,7 +36,7 @@ class RecipeControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    @org.junit.Test
+    @Test
     public void testGetRecipe() throws Exception {
 
         Recipe recipe = new Recipe();
@@ -51,7 +50,7 @@ class RecipeControllerTest {
                 .andExpect(model().attributeExists("recipe"));
     }
 
-    @org.junit.Test
+    @Test
     public void testGetNewRecipeForm() throws Exception {
         RecipeCommand command = new RecipeCommand();
 
