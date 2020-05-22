@@ -1,7 +1,7 @@
 package guru.springframework.spring5recipapp.converters;
 
 
-import guru.springframework.spring5recipapp.commands.UnitOfMeasureCommand;
+import guru.springframework.spring5recipapp.commands.UnitOfMountCommand;
 import guru.springframework.spring5recipapp.domain.UnitOfMount;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,16 +12,16 @@ import static org.junit.Assert.assertNull;
 /**
  * Created by jt on 6/21/17.
  */
-public class UnitOfMeasureToUnitOfMeasureCommandTest {
+public class UnitOfMountToUnitOfMountCommandTest {
 
     public static final String DESCRIPTION = "description";
     public static final Long LONG_VALUE = new Long(1L);
 
-    UnitOfMeasureToUnitOfMeasureCommand converter;
+    UnitOfMountoUnitOfMountCommand converter;
 
     @Before
     public void setUp() throws Exception {
-        converter = new UnitOfMeasureToUnitOfMeasureCommand();
+        converter = new UnitOfMountoUnitOfMountCommand();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
         uom.setId(LONG_VALUE);
         uom.setDescription(DESCRIPTION);
         //when
-        UnitOfMeasureCommand uomc = converter.convert(uom);
+        UnitOfMountCommand uomc = converter.convert(uom);
 
         //then
         assertEquals(LONG_VALUE, uomc.getId());

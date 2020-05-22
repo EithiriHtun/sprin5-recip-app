@@ -2,7 +2,7 @@ package guru.springframework.spring5recipapp.converters;
 
 
 import guru.springframework.spring5recipapp.commands.IngredientCommand;
-import guru.springframework.spring5recipapp.commands.UnitOfMeasureCommand;
+import guru.springframework.spring5recipapp.commands.UnitOfMountCommand;
 import guru.springframework.spring5recipapp.domain.Ingredient;
 import guru.springframework.spring5recipapp.domain.Recipe;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class IngredientCommandToIngredientTest {
 
     @Before
     public void setUp() throws Exception {
-        converter = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
+        converter = new IngredientCommandToIngredient(new UnitOfMountCommandToUnitOfMount());
     }
 
     @Test
@@ -45,9 +45,9 @@ public class IngredientCommandToIngredientTest {
         command.setId(ID_VALUE);
         command.setAmount(AMOUNT);
         command.setDescription(DESCRIPTION);
-        UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
-        unitOfMeasureCommand.setId(UOM_ID);
-        command.setUom(unitOfMeasureCommand);
+        UnitOfMountCommand unitOfMountCommand = new UnitOfMountCommand();
+        unitOfMountCommand.setId(UOM_ID);
+        command.setUom(unitOfMountCommand);
 
         //when
         Ingredient ingredient = converter.convert(command);
@@ -68,7 +68,7 @@ public class IngredientCommandToIngredientTest {
         command.setId(ID_VALUE);
         command.setAmount(AMOUNT);
         command.setDescription(DESCRIPTION);
-        UnitOfMeasureCommand unitOfMeasureCommand = new UnitOfMeasureCommand();
+        UnitOfMountCommand unitOfMountCommand = new UnitOfMountCommand();
 
 
         //when

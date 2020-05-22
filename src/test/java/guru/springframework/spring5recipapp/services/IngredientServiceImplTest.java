@@ -3,10 +3,11 @@ package guru.springframework.spring5recipapp.services;
 import guru.springframework.spring5recipapp.commands.IngredientCommand;
 import guru.springframework.spring5recipapp.converters.IngredientCommandToIngredient;
 import guru.springframework.spring5recipapp.converters.IngredientToIngredientCommand;
-import guru.springframework.spring5recipapp.converters.UnitOfMeasureCommandToUnitOfMeasure;
-import guru.springframework.spring5recipapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
+import guru.springframework.spring5recipapp.converters.UnitOfMountCommandToUnitOfMount;
+import guru.springframework.spring5recipapp.converters.UnitOfMountoUnitOfMountCommand;
 import guru.springframework.spring5recipapp.domain.Ingredient;
 import guru.springframework.spring5recipapp.domain.Recipe;
+import guru.springframework.spring5recipapp.repositories.IngredientRepository;
 import guru.springframework.spring5recipapp.repositories.RecipeRepository;
 import guru.springframework.spring5recipapp.repositories.UnitOfMountRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,14 +30,17 @@ public class IngredientServiceImplTest {
     RecipeRepository recipeRepository;
 
     @Mock
+    IngredientRepository ingredientRepository;
+
+    @Mock
     UnitOfMountRepository unitOfMeasureRepository;
 
     IngredientService ingredientService;
 
     //init converters
     public IngredientServiceImplTest() {
-        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
-        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
+        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMountoUnitOfMountCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMountCommandToUnitOfMount());
     }
 
     @BeforeEach
@@ -44,7 +48,7 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
-                recipeRepository, unitOfMeasureRepository);
+                recipeRepository, ingredientRepository, unitOfMeasureRepository);
     }
 
     @Test
@@ -108,4 +112,21 @@ public class IngredientServiceImplTest {
         verify(recipeRepository, times(1)).save(any(Recipe.class));
 
     }
+
+    @Test
+    public void testDeleteById() throws Exception {
+
+        //given
+        Long ingreIdToDelete = Long.valueOf(2L);
+        Long recipeidToDelete = Long.valueOf(2L);
+
+        //when
+        ingredientService.deleteByIngredientId(recipeidToDelete,ingreIdToDelete);
+
+        //no 'when', since method has void return type
+
+        //then
+        verify(ingredientRepository, times(1)).deleteById(anyLong());
+    }
+
 }

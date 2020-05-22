@@ -4,12 +4,17 @@ import guru.springframework.spring5recipapp.commands.IngredientCommand;
 import guru.springframework.spring5recipapp.commands.RecipeCommand;
 import guru.springframework.spring5recipapp.services.IngredientService;
 import guru.springframework.spring5recipapp.services.RecipeService;
+import guru.springframework.spring5recipapp.services.UnitOfMountService;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.HashSet;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -25,25 +30,25 @@ class IngredientControllerTest {
     @Mock
     IngredientService ingredientService;
 
-    /*
     @Mock
-    UnitOfMountService unitOfMountService;*/
+    UnitOfMountService unitOfMountService;
 
     @Mock
     RecipeService recipeService;
 
-    IngredientController ingredientController;
+    IngredientController controller;
 
     MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        ingredientController = new IngredientController(recipeService, ingredientService);
-        mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+
+        controller = new IngredientController(recipeService, ingredientService, unitOfMountService);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
-    @Test
+    @org.junit.Test
     public void testListIngredients() throws Exception {
         //given
         RecipeCommand recipeCommand = new RecipeCommand();
@@ -59,7 +64,7 @@ class IngredientControllerTest {
         verify(recipeService, times(1)).findCommandById(anyLong());
     }
 
-    @Test
+    @org.junit.Test
     public void testShowIngredient() throws Exception {
         //given
         IngredientCommand ingredientCommand = new IngredientCommand();
@@ -73,7 +78,7 @@ class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/show"))
                 .andExpect(model().attributeExists("ingredient"));
     }
-    /*
+
     @org.junit.Test
     public void testNewIngredientForm() throws Exception {
         //given
@@ -131,5 +136,14 @@ class IngredientControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
 
-    }*/
+    }
+
+    @Test
+    public void testDeleteAction() throws Exception {
+        mockMvc.perform(get("/recipe/1/ingredient/2/delete"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/1/ingredients"));
+
+        verify(ingredientService, times(1)).deleteByIngredientId(anyLong(),anyLong());
+    }
 }
