@@ -47,9 +47,14 @@
                                 <li th:each="category: ${recipe.categories}" th:text="${category.getDescription()}">Cat Three!</li>
                             </ul>
                         </div>
-                        <div class="col-md-6">
+                       <!-- <div class="col-md-6">
                             <img src="../../static/images/weverse_post_9ca96bfc0f164024835d98148117d683168.jpg"
                                  th:src="@{/images/weverse_post_9ca96bfc0f164024835d98148117d683168.jpg}"
+                                 width="200" height="200">
+                        </div>-->
+                        <div class="col-md-6">
+                            <img src="../../static/images/weverse_post_9ca96bfc0f164024835d98148117d683168.jpg"
+                                 th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
                                  width="200" height="200">
                         </div>
                     </div>

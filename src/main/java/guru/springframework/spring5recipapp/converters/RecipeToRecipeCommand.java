@@ -1,5 +1,6 @@
 package guru.springframework.spring5recipapp.converters;
 
+import com.fasterxml.jackson.core.JsonToken;
 import guru.springframework.spring5recipapp.commands.RecipeCommand;
 import guru.springframework.spring5recipapp.domain.Category;
 import guru.springframework.spring5recipapp.domain.Recipe;
@@ -43,6 +44,8 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand> {
         command.setServings(source.getServings());
         command.setSource(source.getSource());
         command.setUrl(source.getUrl());
+        System.out.println("Source Image>>" + source.getImage());
+        command.setImage(source.getImage());
         command.setNotes(notesConverter.convert(source.getNotes()));
 
         if (source.getCategories() != null && source.getCategories().size() > 0){
