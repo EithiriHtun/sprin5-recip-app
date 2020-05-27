@@ -4,10 +4,10 @@ import guru.springframework.spring5recipapp.commands.RecipeCommand;
 import guru.springframework.spring5recipapp.converters.RecipeCommandToRecipe;
 import guru.springframework.spring5recipapp.converters.RecipeToRecipeCommand;
 import guru.springframework.spring5recipapp.domain.Recipe;
+import guru.springframework.spring5recipapp.exceptions.NotFoundException;
 import guru.springframework.spring5recipapp.repositories.RecipeRepository;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -33,7 +33,7 @@ class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
@@ -53,6 +53,14 @@ class RecipeServiceImplTest {
         assertNotNull("Null recipe returned", recipeReturned);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception {
+
+        Optional<Recipe> recipe = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipe);
+        Recipe recipeReturned = recipeService.findById(1L);
     }
 
     @org.junit.Test
