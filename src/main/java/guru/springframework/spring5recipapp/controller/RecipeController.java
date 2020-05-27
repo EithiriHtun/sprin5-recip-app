@@ -25,6 +25,7 @@ public class RecipeController {
     @RequestMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model){
         model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
+       // model.addAttribute("recipe", recipeService.findById(new Long(id)));
         return "recipe/show";
     }
 
@@ -57,6 +58,7 @@ public class RecipeController {
         return "redirect:/";
     }
 
+    //@ResponseStatus(HttpStatus.BAD_REQUEST) // if new long in showById method , use bad_request
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(Exception exception){
@@ -69,6 +71,21 @@ public class RecipeController {
         modelAndView.setViewName("404error");
 
         modelAndView.addObject("exception",exception);
+
+        return modelAndView;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleNumberFormat(Exception exception){
+
+        log.error("Handling Number Format Exception");
+        log.error(exception.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("400error");
+        modelAndView.addObject("exception", exception);
 
         return modelAndView;
     }
